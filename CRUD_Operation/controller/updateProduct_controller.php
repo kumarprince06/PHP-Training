@@ -14,27 +14,17 @@ if (isset($_POST['submit'])) {
         header("location:../editproduct.php?id={$_POST['id']}&message=$error"); // Redirect back with error message
         exit(); // Always exit after header redirect
     } else {
-        // Get the product ID and other details
-        $product_id = $_POST['id'];
-        $product_name = $_POST['name'];
-        $brand = $_POST['brand'];
-        $original_price = $_POST['oPrice'];
-        $selling_price = $_POST['sPrice'];
-        $product_name = $_POST['name'];
-        $brand = $_POST['brand'];
-        $original_price = $_POST['oPrice'];
-        $selling_price = $_POST['sPrice'];
         try {
             // Prepare the SQL query to update the product
             $update_query = $conn->prepare("UPDATE products SET product_name = :product_name, brand = :brand,
             original_price = :original_price, selling_price = :selling_price WHERE id = :id");
 
             // Bind the form values to the placeholders in the query
-            $update_query->bindParam(':product_name', $product_name);
-            $update_query->bindParam(':brand', $brand);
-            $update_query->bindParam(':original_price', $original_price);
-            $update_query->bindParam(':selling_price', $selling_price);
-            $update_query->bindParam(':id', $product_id); // Bind the ID
+            $update_query->bindParam(':product_name', $_POST['name']);
+            $update_query->bindParam(':brand', $_POST['brand']);
+            $update_query->bindParam(':original_price', $_POST['oPrice']);
+            $update_query->bindParam(':selling_price', $_POST['sPrice']);
+            $update_query->bindParam(':id', $_POST['id']); // Bind the ID
 
             // Execute the query
             $update_query->execute();
